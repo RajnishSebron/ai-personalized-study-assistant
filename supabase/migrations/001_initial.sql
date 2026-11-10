@@ -51,6 +51,7 @@ create table if not exists public.quiz_responses (
  id uuid primary key default gen_random_uuid(), user_id uuid not null references auth.users(id) on delete cascade,
  attempt_id uuid not null references public.quiz_attempts(id) on delete cascade,
  topic_id uuid references public.topics(id) on delete set null, topic_name text not null,
+  question_id uuid REFERENCES public.quiz_questions(id) ON DELETE CASCADE,
  selected_answer text, correct_answer text not null, is_correct boolean not null, feedback text,
  source_chunk_ids uuid[] default '{}', source_citations jsonb default '[]', created_at timestamptz not null default now()
 );
