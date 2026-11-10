@@ -18,6 +18,10 @@ CREATE TABLE IF NOT EXISTS public.quiz_questions (
  options jsonb not null, correct_answer text not null, explanation text, option_explanations jsonb,
  topic_name text, difficulty text, source_chunk_ids uuid[] not null, citations jsonb not null default '[]', created_at timestamptz not null default now()
 );
+ALTER TABLE public.quiz_responses
+ADD COLUMN IF NOT EXISTS question_id uuid
+REFERENCES public.quiz_questions(id)
+ON DELETE CASCADE;
 ALTER TABLE public.quiz_questions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS owner_all ON public.profiles;
